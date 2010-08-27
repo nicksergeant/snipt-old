@@ -3,7 +3,7 @@ import os
 bind = "localhost:1338"
 daemon = False                    # Whether work in the background
 debug = False                     # Some extra logging
-logfile = "-"                     # Name of the log file
+logfile = "./logs/gunicorn.log"                     # Name of the log file
 loglevel = "info"                 # The level at which to log
 pidfile = ".gunicorn.pid"     # Path to a PID file
 workers = 4                       # Number of workers to initialize
