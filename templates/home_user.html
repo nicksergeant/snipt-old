@@ -3,7 +3,6 @@
 {% load tagging_tags %}
 {% load pagination_tags %}
 {% load code_stylized %}
-{% load ads %}
 {% load comments %}
 {% load snipt_is_favorite %}
 
@@ -321,11 +320,6 @@
                     </div>
                 </form>
             </div>
-            {% if tag %}
-                {% ad tag %}
-            {% else %}
-                {% ad 'none' %}
-            {% endif %}
             <h1 style="padding-top: 15px;">
                 {% if mine %}
                     My
