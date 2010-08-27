@@ -5,4 +5,6 @@ fabfile.py
 local_settings.py
 logs
 media/admin
+media/snipt.r*.css
+media/snipt.r*.js
 pip-log.txt
