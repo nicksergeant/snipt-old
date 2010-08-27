@@ -34,7 +34,7 @@ $(function() {
     $('#id_comment').autogrow();
     
     $('.mini-search').focus(function() {
-        if ($(this).attr('value') == 'search') {
+        if ($(this).attr('value') == 'search snipt') {
             $(this).data('orig', $(this).attr('value'));
             $(this).attr('value', '');
         }
