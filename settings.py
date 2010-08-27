@@ -93,6 +93,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.comments',
+    'django.contrib.sites',
     'django_authopenid',
     'django_extensions',
     'piston',

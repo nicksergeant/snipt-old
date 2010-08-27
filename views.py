@@ -221,7 +221,7 @@ def user_page(request, user, slug, feed=False):
         elif not public:
             snipts = Snippet.objects.filter(user=context_user.id, public='1').order_by('-created')
         else:
-            snipts = Snippet.objects.filter(public='1').order_by('-created')
+            snipts = Snippet.objects.filter(public='1').order_by('-created')[:100]
 
     # Compile the list of tags that this user has used.
     if mine:

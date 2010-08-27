@@ -220,7 +220,7 @@
             {% if mine %}<a class="add-snipt right" href="#">add snipt</a>{% endif %}
             <h1 style="margin-bottom: 35px;">
                 {% if not mine and not key and not request.user.is_authenticated and not public %}
-                    <a href="/public">Public snipts</a> &raquo; 
+                    <a href="/public">Latest 100 public snipts</a> &raquo; 
                 {% endif %}
                 {% if slug %}
                     <a href="/{% if mine %}{{ request.user.username }}{% else %}{{ context_user.username }}{% endif %}">
@@ -230,7 +230,7 @@
                             {%if not public %}
                                 {{ context_user.username }}'s
                             {% else %}
-                                Public
+                                Latest 100 public
                             {% endif %}
                         {% endif %}
                         snipts</a> &raquo; {{ tag }} <a href="{{ request.path }}/feed" title="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}."><img src="/media/images/rss.png" style="margin-left: 4px; vertical-align: -2px;" alt="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}." title="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}." /></a>
@@ -241,7 +241,7 @@
                         {%if not public %}
                             {{ context_user.username }}'s
                         {% else %}
-                            Public
+                            Latest 100 public
                         {% endif %}
                     {% endif %}
                     snipts <a href="{{ request.path }}/feed" title="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}."><img src="/media/images/rss.png" style="margin-left: 4px; vertical-align: -2px;" alt="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}." title="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}." /></a>

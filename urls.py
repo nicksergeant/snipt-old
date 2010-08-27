@@ -1,5 +1,4 @@
 from django.views.generic.simple import direct_to_template
-from django.views.decorators.cache import cache_page
 from django.utils.translation import ugettext as _
 from django.conf.urls.defaults import *
 from django.contrib.auth.views import *
@@ -50,5 +49,5 @@ if settings.DEBUG:
     )
 
 urlpatterns += patterns('',
-    (r'^(?P<user>[^/]+)?/?(?P<slug>tag/[^/]+)?/?(?P<snipt_id>[^/]+)?/?(all)?$', cache_page(dispatcher, 60 * 15)),
+    (r'^(?P<user>[^/]+)?/?(?P<slug>tag/[^/]+)?/?(?P<snipt_id>[^/]+)?/?(all)?$', dispatcher),
 )

@@ -34,28 +34,6 @@
     <div id="header">
         <div class="frame clearfix">
             <div id="logo-container">{% block logo %}<a href="/{{ request.user.username }}"><img id="logo" src="/media/images/logo.png" alt="Snipt" title="Snipt" /></a>{% endblock %}</div>
-            <div id="header-ads">
-                {% comment %}
-                    <div style="float: left; display: block;">
-                        <a style="display: block; width: 100px; margin: 0 0 0 11px !important;" href="http://riffer.org" title="Riffer - The guitarist's definitive Q &amp; A site"><img src="/media/images/riffer.png" title="Riffer - The guitarist's definitive Q &amp; A site" alt="Riffer - The guitarist's definitive Q &amp; A site" /></a>
-                    </div>
-                {% endcomment %}
-                <script type="text/javascript">
-                    //<![CDATA[
-                    Vertical1236429 = false;
-                    ShowAdHereBanner1236429 = true;
-                    RepeatAll1236429 = false;
-                    NoFollowAll1236429 = true;
-                    BannerStyles1236429 = new Array(
-                    	"a{display:block;font-size:11px;color:#5C5C5C;font-family:verdana,sans-serif;margin:0 4px 10px 0;text-align:center;text-decoration:none;overflow:hidden;}",
-                    	"img{border:0;clear:right;}",
-                    	"a.adhere{color:#5C5C5C;font-weight:bold;font-size:12px;border:1px solid #292929;background:transparent;text-align:center;}",
-                    	"a.adhere:hover{background:transparent;color:#FFF;}"
-                    );
-                    document.write(unescape("%3Cscript src='"+document.location.protocol+"//s3.buysellads.com/1236429/1236429.js?v="+Date.parse(new Date())+"' type='text/javascript'%3E%3C/script%3E"));
-                    //]]>
-                </script>
-            </div>
             <div id="twitter">
                 <a href="http://twitter.com/lionburger"><img id="blink" src="{{ MEDIA_URL }}images/mr-tweet-blind.png" alt="" title="" /></a>
                 <a href="http://twitter.com/lionburger"><img id="mr-tweet" src="{{ MEDIA_URL }}images/mr-tweet.png" alt="Kick ass twitter bird by http://thedesignsuperhero.com" title="Kick ass twitter bird by http://thedesignsuperhero.com" /></a>

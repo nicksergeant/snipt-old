@@ -1,5 +1,5 @@
 -e git://github.com/django/django.git@1.1.X#egg=django
--e git+http://github.com/benoitc/gunicorn.git#egg=gunicorn
+-e git+http://github.com/benoitc/gunicorn.git@0.11.0#egg=gunicorn
 -e svn+http://django-pagination.googlecode.com/svn/trunk/#egg=django-pagination
 -e git+http://github.com/django-extensions/django-extensions.git#egg=django-extensions
 -e hg+http://bitbucket.org/jespern/django-piston#egg=django-piston
