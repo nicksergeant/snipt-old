@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="auth-forms">
+        <div class="signup">
+            <h3>Signup</h3>
+            <div class="error" style="padding-top: 15px; margin-bottom: 0;">
+                <p style="line-height: 17px;">Your OpenID has been successfully verified.</p>
+                <p style="margin-top: 15px; line-height: 17px;">You may now create a new account, or link this OpenID to an existing account.</p>
+            </div>
+            <form name="fregister" action="{% url user_register %}" method="post" class="clearfix">
+                {{ form.next }}
+                <h2 style="padding-bottom: 10px; padding-top: 10px;">New account</h2>
+                <div class="fields">
+                    {% if form1.username.errors %}<div class="error">{{ form1.username.errors }}</div>{% endif %}
+                    <label for="username">Username: </label><input type="text" name="username" id="username" class="username" alt="Username" /><br />
+                    {% if form1.email.errors %}<div class="error">{{ form1.email.errors }}</div>{% endif %}
+                    <label for="email">Email: </label><input type="text" name="email" id="email" class="email" alt="Email" />
+                </div>
+                <div class="submit">
+                    <input type="submit" name="bnewaccount" class="submit" value="Create account" />
+                </div>
+    		</form>
+    		<div class="openid-or" style="margin-top: 15px;">
+                <div class="openid-or-sep"> </div>
+                <span style="background-color: #000">or</span>
+            </div>
+            <form name="fverify" action="{% url user_register %}" method="post" class="clearfix" style="padding-top: 0;">
+                {{ form.next }}
+                <h2 style="padding-bottom: 10px; padding-top: 0;">Link existing account</h2>
+                {% if form2.errors %}
+                    <div class="error">Invalid username or password.</div>
+                {% endif %}
+                <div class="fields">
+                    <label for="link-username">Username: </label><input type="text" name="username" id="link-username" class="username" alt="Username" /><br />
+                    <label for="link-password">Password: </label><input type="password" name="password" id="link-password" class="password" alt="Password" />
+                </div>
+                <div class="submit">
+                    <input type="submit" name="bverify" class="submit" value="Link account" />
+                </div>
+    		</form>        	
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="auth-forms">
+        <div class="signup">
+            <h3>Signup</h3>
+            {% include "registration/signup_form.html" %}
+            <ul class="auth-links">
+                <li><a href="/login">Login</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

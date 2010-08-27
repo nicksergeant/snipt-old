@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load snippet_extras %}
+
+{% block body_styles %} id="userpage"{% endblock %}
+
+{% block content %}
+
+{% include 'account-header.html' %}
+
+<div id="userpage-content">
+    <div id="account-page" class="clearfix">
+    	<div id="account-left" class="left">
+    	    <h1><a href="/account">My account</a> &raquo; Set OpenID</h1>
+    	    {% if msg %}<p class="msg">{{ msg }}</p>{% endif %}
+            <p>To set an OpenID for this account, simply <a href="/logout">logout</a>, then <a href="/login">log back in</a> with your OpenID.</p>
+            <p style="margin-top: 15px;">You'll then be prompted to link your existing account with your OpenID.</p>
+        </div>
+        <div id="account-right" class="left">
+            <h1>My stats</h1>
+            <ul>
+                <li>{% snipt_count request.user.id %} snipts</li>
+                <li>{% tag_count request.user.id %} tags</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

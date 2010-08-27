@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:snipt="http://snipt.net/namespaces/snipt">
+    <channel>
+        <atom:link href="http://snipt.net{{ request.path }}" rel="self" type="application/rss+xml" />
+        <title>{% block title %}Snipt - {{ context_user }}{% if tag %} - {{ tag }}{% endif %}{% endblock %}</title>
+        <link>http://snipt.net{{ real_path }}</link>
+        <description>The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}.</description>
+        <language>en-us</language>
+        {% for snipt in snipts %}
+            <item>
+                <title>{{ snipt.description }}</title>
+                <link>http://snipt.net/{{ snipt.user }}/{{ snipt.slug }}{% if not snipt.public %}?key={{ snipt.key }}{% endif %}</link>
+                <description><![CDATA[{{ snipt.code }}]]></description>
+                <pubDate>{{ snipt.created }}</pubDate>
+                <snipt:tags>{{ snipt.tags}}</snipt:tags>
+                <guid>http://snipt.net/{{ snipt.user }}/{{ snipt.slug }}{% if not snipt.public %}?key={{ snipt.key }}{% endif %}</guid>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Snipt - API{% endblock %}
+
+{% block body_styles %} id="apipage"{% endblock %}
+
+{% block logo %}
+<a href="/"><img id="logo" src="/media/images/logo-api.png" alt="Snipt API" title="Snipt API" /></a>
+{% endblock %}
+
+{% block content %}
+
+<div id="apipage-content" class="clearfix">
+    <h1>A call for help</h1>
+    <p>Houston, we have a problem. We've hit the limit as far as time resources are concerned. We're looking to the development community to help us build a stable, robust, and open-source RESTful API for <a href="http://snipt.net">Snipt</a>.</p>
+
+    <h1>A little background noise</h1>
+    <p><a href="http://lionburger.com">Lion Burger</a> is the group behind Snipt. Lion Burger is a side project of <a href="http://nicksergeant.com">Nick Sergeant</a> and <a href="http://pkarl.com">Pete Karl</a>. We primarily build apps and sites for clients, and have a few on our plate right now.</p>
+    <p>Snipt is a side project quickly gaining momentum among developers. In order to keep up with the community's demands, and foster Snipt's growth, we need to provide an open, public API.</p>
+    
+    <h1>What we need</h1>
+    <p>The aim of this call for help is to organize a group of developers interested in helping build the official Snipt API. While Snipt itself will remain closed-source, the API will be open-sourced on <a href="http://github.com">GitHub</a>.</p>
+    
+    <h1>What's been done so far</h1>
+    <p>We've taken a long, hard look at what we want for an API. We have a very clear high-level vision of what needs to be done, but lack the resources needed to pull it off in a timely manner. We've made public some <a href="/notes">conversation notes we put together</a>.</p>
+    <p>Also, as a show of how badly an API is wanted, <a href="http://www.michaelboutros.com/">Michael Boutros</a> actually wrote a <a href="http://github.com/michaelboutros/rsnipt/tree/master">pseudo-API in Ruby</a> using screen-scraping libraries.</p>
+
+    <h1>Why it matters</h1>
+    <p>It matters because, as users of Snipt, we want to see it succeed in platforms and environments that are not penetrable by the current website-only technology (eg. desktop apps, text editors, CLIs, etc).</p>
+
+    <h1>How to help</h1>
+    <p style="margin-bottom: 0;">If you're interested in helping, or have any questions or comments, contact <a href="mailto:nick@lionburger.com">Nick Sergeant</a>.</p>
+</div>
+
+{% endblock %}

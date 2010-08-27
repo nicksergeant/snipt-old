@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Snipt - API{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ MEDIA_URL }}style_api.css" type="text/css" media="screen" charset="utf-8" />{% endblock %}
+
+{% block body_styles %} id="apipage"{% endblock %}
+
+{% block logo %}
+<a href="/"><img id="logo" src="/media/images/logo-api.png" alt="Snipt API" title="Snipt API" /></a>
+{% endblock %}
+
+{% block content %}
+
+<div id="apipage-content" class="content">
+    <h1>
+        Snipt API - discussion notes
+    </h1>
+    <div class="writeboardbody">
+        <h2 style="margin-top: 20px;">
+            Overview:
+        </h2>
+        <ul>
+            <li>encoding → force <span class="caps">UTF</span>-8
+                <ul>
+                    <li>Flickr method: if not <span class="caps">UTF</span>-8, assume it’s <span class="caps">ISO</span>-8859-1 &amp; convert
+                    </li>
+                </ul>
+            </li>
+            <li>Auth <span class="caps">API</span>, too
+            </li>
+            <li>dates, tags, urls, snippets are key
+            </li>
+            <li>don’t forget documentation (terms of use, etc.)
+            </li>
+            <li>Request formats (start w/rest-in,rest-out?)
+                <ul>
+                    <li>
+                        <strong>REST</strong>
+                    </li>
+                    <li>
+                        <span class="caps">XML</span>-RPC
+                    </li>
+                </ul>
+            </li>
+            <li>Response formats
+                <ul>
+                    <li>
+                        <strong>REST</strong>
+                    </li>
+                    <li>
+                        <span class="caps">JSON</span>
+                    </li>
+                    <li>
+                        <span class="caps">PHP</span>
+                    </li>
+                    <li>?
+                    </li>
+                </ul>
+            </li>
+            <li>Build kits (this = open source arena)
+                <ul>
+                    <li>Python
+                    </li>
+                    <li>
+                        <span class="caps">PHP</span>
+                    </li>
+                    <li>Ruby/Rails
+                    </li>
+                    <li>etc.
+                    </li>
+                </ul>
+            </li>
+            <li>Don’t forget error handling!
+                <ul>
+                    <li>Codes for bad auth, snipt not found, bad date range, missing token, etc.
+                    </li>
+                </ul>
+            </li>
+            <li>Oauth.
+            </li>
+        </ul>
+        <p>
+            Based on an authentication key/token/frob/etc. the <span class="caps">API</span> (in it’s most basic form) has hooks to create/edit/delete/select snippets. Ideally, though, the hooks match user actions, like <em>give me my latest public snipts</em>, <em>give me the embed code for snipt with <span class="caps">ID 283</span></em>, or, for that matter, <em>give me the permalink for snipt with slug ‘I-like-to-party’ owned by me</em>. See the difference between that <span class="caps">API</span> and a <span class="caps">CRUD API</span>?
+        </p>
+        <h2>
+            <strong>Draft <span class="caps">API</span> outline</strong>
+        </h2>
+        <ul>
+            <li>Auth
+                <ul>
+                    <li>snipt.auth.checkToken – allows you to check your token. <span class="caps">SNAP</span>!
+                    </li>
+                    <li>.getFrob – used as session identified for desktop apps, etc.
+                    </li>
+                    <li>.getToken – used by Oauth
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li>Snippets
+                <ul>
+                    <li>snipt.snippets.getlist – (token, howMany=’10’, tag=’’, filter_by=’search phrase’, order_by=’-pubdate/comment_count/popularity’)
+                    </li>
+                    <li>.getPublicList – (token, howMany=’10’, tag=’’, filter_by=’search phrase’, order_by=’-pubdate/comment_count/popularity’)
+                    </li>
+                    <li>.getSnippet – (token, id/slug)
+                    </li>
+                    <li>.getSnippets – (token, set=(‘id’,’id’,’id’,...)
+                        <ul>
+                            <li>ex: set=(239,23,42,15,1)
+                            </li>
+                        </ul>
+                    </li>
+                    <li>.getPublicSnippets – (token, howMany=’10’)
+                    </li>
+                    <li>.addSnippet – (token, public=’no’, desc=’description’, tags=’tag, list, comma-delim’, code=’code() { goes=\’here\’ }’, lexer=’php’)
+                    </li>
+                    <li>.updateSnippet – (token, id/slug, desc=”new description”, addtag=’additional-tag’, ‘tags=’replace, all, tags’)
+                    </li>
+                    <li>.getEmbedCode – (token, id/slug)
+                    </li>
+                    <li>.deleteSnippet – (token, id/slug)
+                    </li>
+                    <li>.suggestSnippets – (token, tag/keyword, howMany=’10’)
+                        <ul>
+                            <li>return popular/controversial snippets based on a keyword
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li>Tags
+                <ul>
+                    <li>snipt.tags.getList
+                    </li>
+                    <li>.getPublicList
+                    </li>
+                    <li>.renameTag – (token, origin=’tag-name’, target=’new-tag-name’)
+                        <ul>
+                            <li>your tags only, this may be dangerous
+                            </li>
+                        </ul>
+                    </li>
+                    <li>.mergeTags – (token, tag_set=(‘tag1’,’tag2’,’tag3’,...)
+                        <ul>
+                            <li>this also may be dangerous &amp; tough…
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

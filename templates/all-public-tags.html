@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - public - tags | Share and store code or command snippets.{% endblock %}
+
+{% block body_styles %} id="userpage"{% endblock %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+    {% include 'userpage-header.html' %}
+{% endif %}
+
+<div id="userpage-content" class="clearfix full-page-snipt">    
+    {% if not request.user.is_authenticated %}
+        <div class="message">
+            <div class="info">
+                <div class="content">
+                    <a href="/signup">Sign up</a> to create your own snipts, or <a href="/login">login</a>.
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <h1>All public tags</h1>
+    <ul id="user-tags" class="public clearfix">
+        {% for usertag in tags %}
+            <li><a href="/public/tag/{{ usertag|urlencode }}">{{ usertag }} ({{ usertag.count }})</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock content %}

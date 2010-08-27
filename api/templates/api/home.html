@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - API | Share and store code or command snippets.{% endblock %}
+
+{% block body_styles %} id="userpage"{% endblock %}
+
+{% block logo %}
+    <a href="/"><img id="logo" src="/media/images/logo-api.png" alt="Snipt API" title="Snipt API" /></a>
+{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        {% include 'userpage-header.html' %}
+    {% endif %}
+    <div id="userpage-content" class="api clearfix">
+        <h1>The Snipt API</h1>
+        <p style="margin-top: 0;">Note: API development is still in-progress. Follow the API updates on <a href="http://feedback.snipt.net/pages/8117-general/suggestions/86197-api-for-snipt-app-developers?ref=title">UserVoice</a> and <a href="http://twitter.com/lionburger">Twitter</a>.</p>
+        <p style="font-size: 12px; font-style: italic;">The format of this API doc was inspired by the cleverly manufactured <a href="http://baconfile.com/api/">Baconfile API</a> crafted by the very talented <a href="http://www.wilsonminer.com/">Wilson Miner</a>.</p>
+        <a name="tags" id="tags"></a>
+        <h2>Tags</h2>
+        <script type="text/javascript" src="http://snipt.net/embed/fb34d5c7f1d900a00405aae84173096d"></script>
+        <dl>
+            <dt>Formats:</dt>
+            <dd>json, xml, yaml, pickle</dd>
+            <dt>Sample:</dt>
+            <dd><a href="http://snipt.net/api/tags.json">http://snipt.net/api/tags.json</a></dd>
+        </dl>
+        <a name="tag" id="tag"></a>
+        <h2>Tag</h2>
+        <script type="text/javascript" src="http://snipt.net/embed/138a79969e2c6b82e9b563f01fa150fb"></script>
+        <dl>
+            <dt>Formats:</dt>
+            <dd>json, xml, yaml, pickle</dd>
+            <dt>Sample:</dt>
+            <dd><a href="http://snipt.net/api/tags/1.json">http://snipt.net/api/tags/1.json</a></dd>
+        </dl>
+        <a name="user" id="user"></a>
+        <h2>User</h2>
+        <script type="text/javascript" src="http://snipt.net/embed/735315a787af892cc6bf6721c7d8c1f0"></script>
+        <dl>
+            <dt>Formats:</dt>
+            <dd>json, xml, yaml, pickle</dd>
+            <dt>Sample:</dt>
+            <dd><a href="http://snipt.net/api/users/nick.json">http://snipt.net/api/users/nick.json</a></dd>
+        </dl>
+        <a name="snipt" id="snipt"></a>
+        <h2>Snipt</h2>
+        <script type="text/javascript" src="http://snipt.net/embed/5963a0e3419671fe3b4dcb710e466861"></script>
+        <dl>
+            <dt>Formats:</dt>
+            <dd>json, xml, yaml, pickle</dd>
+            <dt>Optional:</dt>
+            <dd>style - you can specify a <a href="http://pygments.org/docs/styles">Pygments theme</a> here, otherwise it will fall back to 'default'. Available styles: 'manni', 'perldoc', 'borland', 'colorful', 'default', 'murphy', 'vs', 'trac', 'tango', 'fruity', 'autumn', 'bw', 'emacs', 'pastie', 'friendly', 'native'.</dd>
+            <dt>Sample:</dt>
+            <dd><a href="http://snipt.net/api/snipts/13.json?style=native">http://snipt.net/api/snipts/13.json?style=native</a></dd>
+        </dl>
+    </div>
+{% endblock %}

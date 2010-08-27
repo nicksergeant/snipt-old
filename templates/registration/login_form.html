@@ -1,0 +1,13 @@
+<form name="fauth" action="{% url user_signin %}" method="post" class="login-form" style="padding-top: 0;">
+    {{ form1.next }}
+    {% if form1.errors %}
+        <div class="error">Invalid username or password.</div>
+    {% endif %}
+    <div class="fields">
+        <label for="username">Username: </label><input type="text" name="username" id="username" class="username" alt="Username" /><br />
+        <label for="password">Password: </label><input type="password" name="password" id="password" class="password" alt="Password" />
+    </div>
+    <div class="submit">
+        <input type="submit" name="blogin" class="submit" value="Login" />
+    </div>
+</form>

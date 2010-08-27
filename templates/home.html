@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} | Share and store code or command snippets.{% endblock %}
+
+{% block body_styles %} id="homepage"{% endblock %}
+
+{% block content %}
+<div id="homepage-content">
+    <div id="homepage-top" class="clearfix">
+        <div id="left" class="left">
+            <div class="slogan">
+                <h1>Snipt is your collection of frequently used commands or code snippets.</h1>
+                <h2>Because even Subversion gurus forget the 'svn merge' syntax sometimes.</h2>
+                <a href="/public" id="browse-all-snipts" title="Browse all public snipts"><img src="{{ MEDIA_URL }}images/blank.gif" alt="Browse all public snipts" title="Browse all public snipts" /></a>
+                <h2 class="public-browse" style="margin-top: 5px; margin-left: 38px; padding-top: 0;">or <a href="/search">search all public snipts &raquo;</a></h2>
+            </div>
+        </div>
+        <div id="right" class="right">
+            <div class="auth-forms">
+                <h3>Login with OpenID</h3>
+                <div class="openid clearfix">
+                    <form method="post" action="/login" name="fopenid" class="openid-form">
+                        <div class="fields">
+                            <input type="hidden" id="id_next" value="/" name="next" />
+                            <label for="id_openid_url" style="display: none;">Login with OpenID:</label><input type="text" maxlength="255" name="openid_url" class="username openid" id="id_openid_url" />
+                        </div>
+                        <div class="submit">
+                            <input type="submit" value="Login with OpenID" class="submit" name="bsignin" />
+                        </div>
+                    </form>
+                </div>
+                <div class="openid-or">
+                    <div class="openid-or-sep">&nbsp;</div>
+                    <span>or</span>
+                </div>
+                <div class="signup left">
+                    <h3>Signup</h3>
+                    {% include "registration/signup_form.html" %}
+                </div>
+                <div class="login left">
+                    <h3>Login</h3>
+                    {% include "registration/login_form.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="homepage-promos" class="clearfix">
+        <div class="promo-container clearfix">
+            <div class="promo-left left">
+                <h1>So, what exactly is Snipt good for?</h1>
+                <h2>It's good for storing small pieces of code or commands that you use rather frequently, and will probably forget.</h2>
+            </div>
+            <div class="promo-right left">
+                <ul class="snipts" style="padding-top: 5px;">
+                    <li class="container-promo clearfix">
+                        <pre class="code" style="display: none;">GRANT ALL PRIVILEGES ON my_database.* 
+TO 'my_user'@'localhost'
+IDENTIFIED BY 'my_password' 
+WITH GRANT OPTION;</pre>
+                        <div id="code-stylized">
+                            <div class="highlight">
+<pre><span class="k">GRANT</span> <span class="k">ALL</span> <span class="n">PRIVILEGES</span> <span class="k">ON</span> <span class="n">my_database</span><span class="p">.</span><span class="o">*</span> 
+<span class="k">TO</span> <span class="s1">'my_user'</span><span class="o">@</span><span class="s1">'localhost'</span>
+<span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">'my_password'</span> 
+<span class="k">WITH</span> <span class="k">GRANT</span> <span class="k">OPTION</span><span class="p">;</span></pre>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

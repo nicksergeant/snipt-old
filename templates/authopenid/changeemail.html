@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load snippet_extras %}
+
+{% block body_styles %} id="userpage"{% endblock %}
+
+{% block content %}
+
+{% include 'account-header.html' %}
+
+<div id="userpage-content">
+    <div id="account-page" class="clearfix">
+    	<div id="account-left" class="left">
+    	    <h1><a href="/account">My account</a> &raquo; Change email</h1>
+    	    {% if msg %}<p class="msg">{{ msg }}</p>{% endif %}
+            <div class="aligned">
+            	<form action="." method="post" accept-charset="utf-8">
+            	    {% if form.email.errors %}<div class="error">{{ form.email.errors }}</div>{% endif %}
+            		<div id="form-row"><label for="id_email">Email</label>{{ form.email }}</div>
+            		{% if form.password.errors %}<div class="error">{{ form.password.errors }}</div>{% endif %}
+            		<div id="form-row"><label for="id_password">Password or OpenID</label>{{ form.password }}</div>
+                    <p><input type="submit" value="Change email"></p>
+            	</form>
+            </div>
+        </div>
+        <div id="account-right" class="left">
+            <h1>My stats</h1>
+            <ul>
+                <li>{% snipt_count request.user.id %} snipts</li>
+                <li>{% tag_count request.user.id %} tags</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

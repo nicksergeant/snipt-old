@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load snippet_extras %}
+
+{% block body_styles %} id="userpage"{% endblock %}
+
+{% block content %}
+
+{% include 'account-header.html' %}
+
+<div id="userpage-content">
+    <div id="account-page" class="clearfix">
+    	<div id="account-left" class="left">
+    	    <h1>My account</h1>
+    	    {% if msg %}<p class="msg">{{ msg }}</p>{% endif %}
+    	    <ul id="account-options">
+                {% if not is_openid %}
+                    <li><a href="/account/set-openid/">Set OpenID</a></li>
+                {% endif %}
+                <li><a href="{% url user_changepw %}">Change password</a></li>
+                <li><a href="{% url user_changeemail %}">Change email</a></li>
+                {% if is_openid %}<li><a href="{% url user_changeopenid %}">Change OpenID</a></li>{% endif %}
+                <li><a href="{% url user_delete %}">Delete account</a></li>
+            </ul>
+        </div>
+        <div id="account-right" class="left">
+            <h1>My stats</h1>
+            <ul>
+                <li>{% snipt_count request.user.id %} snipts</li>
+                <li>{% tag_count request.user.id %} tags</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

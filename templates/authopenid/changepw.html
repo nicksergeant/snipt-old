@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load snippet_extras %}
+
+{% block body_styles %} id="userpage"{% endblock %}
+
+{% block content %}
+
+{% include 'account-header.html' %}
+
+<div id="userpage-content">
+    <div id="account-page" class="clearfix">
+    	<div id="account-left" class="left">
+    	    <h1><a href="/account">My account</a> &raquo; Change password</h1>
+    	    {% if msg %}<p class="msg">{{ msg }}</p>{% endif %}
+            <div class="aligned">
+            	<form action="." method="post" accept-charset="utf-8">
+            		{% if form.oldpw.errors %}<div class="error">{{ form.oldpw.errors }}</div>{% endif %}
+            		<div id="form-row"><label for="id_oldpw">Current password</label>{{ form.oldpw }}</div>
+            		{% if form.password1.errors %}<div class="error">{{ form.password1.errors }}</div>{% endif %}
+            		<div id="form-row"><label for="id_password1">New password</label>{{ form.password1 }}</div>
+            		{% if form.password2.errors %}<div class="error">{{ form.password2.errors }}</div>{% endif %}
+            		<div id="form-row"><label for="id_password2">New password again</label>{{ form.password2 }}</div>
+                    <p><input type="submit" value="Change password"></p>
+            	</form>
+        	</div>
+        </div>
+        <div id="account-right" class="left">
+            <h1>My stats</h1>
+            <ul>
+                <li>{% snipt_count request.user.id %} snipts</li>
+                <li>{% tag_count request.user.id %} tags</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

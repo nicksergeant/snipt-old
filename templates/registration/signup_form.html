@@ -1,0 +1,15 @@
+<form action="{% url user_signup %}" method="post" class="signup-form" style="padding-top: 0;">
+    <div class="fields">
+        {% if form.username.errors %}<div class="error">{{ form.username.errors }}</div>{% endif %}
+        <label for="reg-username">Username: </label><input id="reg-username" type="text" name="username" class="username" alt="Username" value="{% if form.username.data %}{{ form.username.data }}{% endif %}" /><br />
+        {% if form.email.errors %}<div class="error">{{ form.email.errors }}</div>{% endif %}
+        <label for="reg-email">Email: </label><input id="reg-email" type="text" name="email" class="email" alt="E-mail" value="{% if form.email.data %}{{ form.email.data }}{% endif %}" /><br />
+        {% if form.password1.errors %}<div class="error">{{ form.password1.errors }}</div>{% endif %}
+        <label for="reg-password">Password: </label><input id="reg-password" type="password" name="password1" class="password" alt="Password" value="{% if form.password1.data %}{{ form.password1.data }}{% endif %}" /><br />
+        {% if form.password2.errors %}<div class="error">{{ form.password2.errors }}</div>{% endif %}
+        <label for="reg-password-again">Password again: </label><input id="reg-password-again" type="password" name="password2" class="password password-again" alt="Again" value="{% if form.password2.data %}{{ form.password2.data }}{% endif %}" />
+    </div>
+    <div class="submit">
+        <input type="submit" name="submit" class="submit" value="Signup" />
+    </div>
+</form>

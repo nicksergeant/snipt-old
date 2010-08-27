@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+
+{% load tagging_tags %}
+{% load pagination_tags %}
+{% load code_stylized %}
+{% load ads %}
+{% load comments %}
+{% load snipt_is_favorite %}
+
+{% block title %}{{ block.super }} - {{ context_user }}{% if tag %} - {{ tag }}{% endif %} | Share and store code or command snippets.{% endblock %}
+
+{% block header %}<link type="application/rss+xml" rel="alternate" title="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}." href="{{ request.path }}/feed" />{% endblock %}
+
+{% block js %}<script type="text/javascript">last_lexer = '{{ last_lexer }}'; var request_tag = '{{ request_tag }}';{% if mine %} var mine = true;{% else %} var mine = false;{% endif %}</script>{% endblock %}
+
+{% block body_styles %} id="userpage"{% endblock %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+    {% include 'userpage-header.html' %}
+{% endif %}
+
+<div id="userpage-add-snipt" style="display: none;">
+    <form action="./" method="post" id="snippet-form" onsubmit="Save(); return false;">
+        <div class="titles">
+            <ul>
+                <li><span>Add:</span></li>
+                <li><label for="code-0" id="code-title">Code</label></li>
+                <li><label for="description-0" id="description-title">Short description</label></li>
+                <li><label for="tags-0" id="tags-title">Tags</label></li>
+            </ul>
+        </div>
+        <div class="fields clearfix">
+            <textarea rows="10" cols="10" name="code" id="code-0"></textarea>
+            <div class="right clearfix">
+                <div class="right-fields clearfix">
+                    <input type="text" name="description" id="description-0" />
+                    <input type="text" name="tags" id="tags-0" />
+                </div>
+                <div class="right-info clearfix">
+                    <div class="descriptors">
+                        <span>Like: <em>create mysql user</em></span>
+                        <span class="tags">Like: <em>mysql, bash, server</em></span>
+                    </div>
+                    <div id="select-lexer">
+                        <select name="lexer" id="lexer-0">
+                            <option value="bash">Bash</option>
+                            <option value="css">CSS</option>
+                            <option value="html">HTML</option>
+                            <option value="js">JavaScript</option>
+                            <option value="mysql">MySQL</option>
+                            <option value="php">PHP</option>
+                            <option value="python">Python</option>
+                            <option value="rb">Ruby</option>
+                            <option value="text" selected="selected">Text only</option>
+                            <option value="d-objdump">---------</option>
+                            <option value="as">ActionScript</option>
+                            <option value="as3">ActionScript 3</option>
+                            <option value="apacheconf">ApacheConf</option>
+                            <option value="applescript">AppleScript</option>
+                            <option value="bbcode">BBCode</option>
+                            <option value="bat">Batchfile</option>
+                            <option value="befunge">Befunge</option>
+                            <option value="boo">Boo</option>
+                            <option value="brainfuck">Brainfuck</option>
+                            <option value="c">C</option>
+                            <option value="csharp">C#</option>
+                            <option value="cpp">C++</option>
+                            <option value="c-objdump">c-objdump</option>
+                            <option value="css+django">CSS+Django/Jinja</option>
+                            <option value="css+genshitext">CSS+Genshi Text</option>
+                            <option value="css+mako">CSS+Mako</option>
+                            <option value="css+myghty">CSS+Myghty</option>
+                            <option value="css+php">CSS+PHP</option>
+                            <option value="css+erb">CSS+Ruby</option>
+                            <option value="css+smarty">CSS+Smarty</option>
+                            <option value="cheetah">Cheetah</option>
+                            <option value="clojure">Clojure</option>
+                            <option value="common-lisp">Common Lisp</option>
+                            <option value="cpp-objdump">cpp-objdump</option>
+                            <option value="d">D</option>
+                            <option value="dpatch">Darcs Patch</option>
+                            <option value="control">Debian Control file</option>
+                            <option value="sourceslist">Debian Sourcelist</option>
+                            <option value="delphi">Delphi</option>
+                            <option value="diff">Diff</option>
+                            <option value="django">Django/Jinja</option>
+                            <option value="dylan">Dylan</option>
+                            <option value="erb">ERB</option>
+                            <option value="erlang">Erlang</option>
+                            <option value="fortran">Fortran</option>
+                            <option value="gas">GAS</option>
+                            <option value="genshi">Genshi</option>
+                            <option value="genshitext">Genshi Text</option>
+                            <option value="pot">Gettext Catalog</option>
+                            <option value="gnuplot">Gnuplot</option>
+                            <option value="groff">Groff</option>
+                            <option value="html+cheetah">HTML+Cheetah</option>
+                            <option value="html+django">HTML+Django/Jinja</option>
+                            <option value="html+genshi">HTML+Genshi</option>
+                            <option value="html+mako">HTML+Mako</option>
+                            <option value="html+myghty">HTML+Myghty</option>
+                            <option value="html+php">HTML+PHP</option>
+                            <option value="html+smarty">HTML+Smarty</option>
+                            <option value="haskell">Haskell</option>
+                            <option value="ini">INI</option>
+                            <option value="irc">IRC logs</option>
+                            <option value="io">Io</option>
+                            <option value="java">Java</option>
+                            <option value="jsp">Java Server Page</option>
+                            <option value="js+cheetah">JavaScript+Cheetah</option>
+                            <option value="js+django">JavaScript+Django/Jinja</option>
+                            <option value="js+genshitext">JavaScript+Genshi Text</option>
+                            <option value="js+mako">JavaScript+Mako</option>
+                            <option value="js+myghty">JavaScript+Myghty</option>
+                            <option value="js+php">JavaScript+PHP</option>
+                            <option value="js+erb">JavaScript+Ruby</option>
+                            <option value="js+smarty">JavaScript+Smarty</option>
+                            <option value="llvm">LLVM</option>
+                            <option value="lighty">Lighttpd configuration file</option>
+                            <option value="lhs">Literate Haskell</option>
+                            <option value="logtalk">Logtalk</option>
+                            <option value="lua">Lua</option>
+                            <option value="moocode">MOOCode</option>
+                            <option value="basemake">Makefile</option>
+                            <option value="make">Makefile</option>
+                            <option value="mako">Mako</option>
+                            <option value="matlab">Matlab</option>
+                            <option value="matlabsession">Matlab session</option>
+                            <option value="minid">MiniD</option>
+                            <option value="trac-wiki">MoinMoin/Trac Wiki markup</option>
+                            <option value="mupad">MuPAD</option>
+                            <option value="myghty">Myghty</option>
+                            <option value="nasm">NASM</option>
+                            <option value="nginx">Nginx configuration file</option>
+                            <option value="numpy">NumPy</option>
+                            <option value="objdump">objdump</option>
+                            <option value="objective-c">Objective-C</option>
+                            <option value="ocaml">OCaml</option>
+                            <option value="pov">POVRay</option>
+                            <option value="perl">Perl</option>
+                            <option value="python3">Python 3</option>
+                            <option value="py3tb">Python 3.0 Traceback</option>
+                            <option value="pytb">Python Traceback</option>
+                            <option value="pycon">Python console session</option>
+                            <option value="rhtml">RHTML</option>
+                            <option value="raw">Raw token data</option>
+                            <option value="redcode">Redcode</option>
+                            <option value="rst">reStructuredText</option>
+                            <option value="rbcon">Ruby irb session</option>
+                            <option value="splus">S</option>
+                            <option value="sql">SQL</option>
+                            <option value="scala">Scala</option>
+                            <option value="scheme">Scheme</option>
+                            <option value="smalltalk">Smalltalk</option>
+                            <option value="smarty">Smarty</option>
+                            <option value="sqlite3">sqlite3con</option>
+                            <option value="squidconf">SquidConf</option>
+                            <option value="tcl">Tcl</option>
+                            <option value="tcsh">Tcsh</option>
+                            <option value="tex">TeX</option>
+                            <option value="vb.net">VB.net</option>
+                            <option value="vim">VimL</option>
+                            <option value="xml">XML</option>
+                            <option value="xml+cheetah">XML+Cheetah</option>
+                            <option value="xml+django">XML+Django/Jinja</option>
+                            <option value="xml+mako">XML+Mako</option>
+                            <option value="xml+myghty">XML+Myghty</option>
+                            <option value="xml+php">XML+PHP</option>
+                            <option value="xml+erb">XML+Ruby</option>
+                            <option value="xml+smarty">XML+Smarty</option>
+                            <option value="xslt">XSLT</option>
+                            <option value="yaml">YAML</option>
+                        </select>
+                    </div>
+                    <div class="make-public">
+                        <input type="checkbox" name="public" id="public-0" />
+                        <label for="public-0">public</label>
+                    </div>
+                    <div class="submit">
+                        <a href="#" onclick="$('#submit-new').click(); return false;">add it</a>&nbsp;&nbsp;or&nbsp;&nbsp;<a class="cancel" href="#" onclick="$('#userpage-add-snipt').slideToggle(); return false;">cancel</a>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Add it" name="submit" id="submit-new" style="display: none;" />
+        </div>
+    </form>
+</div>
+<div id="userpage-content" class="clearfix {% if snipts %}with-snipts{% endif %}">
+
+    {% if nothing %}
+        <div class="message">
+            <div class="info">
+                <div class="content clearfix">
+                    <a href="#" onclick="DisableMessage(); return false;" class="right">close</a>Calling all developers! We need your help <a href="http://api.snipt.net/">building the Snipt API</a>.
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    {% if not request.user.is_authenticated %}
+        <div class="message">
+            <div class="info">
+                <div class="content">
+                    <a href="/signup">Sign up</a> to create your own snipts, or <a href="/login">login</a>.
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    {% if not snipts and mine %}
+        <div class="center">Welcome to Snipt, enjoy your stay!  Start by <a href="#add-one" class="toggle-add">adding your first snipt</a>.</div>
+    {% endif %}
+    {% if not snipts and not mine %}
+        <div class="center">Sorry, looks like {{ context_user.username }} doesn't have any public snipts.</div>
+    {% endif %}
+    <div id="has-snipts"{% if not snipts %} style="display: none;"{% endif %}>
+        <div id="left">
+            {% if mine %}<a class="add-snipt right" href="#">add snipt</a>{% endif %}
+            <h1 style="margin-bottom: 35px;">
+                {% if not mine and not key and not request.user.is_authenticated and not public %}
+                    <a href="/public">Public snipts</a> &raquo; 
+                {% endif %}
+                {% if slug %}
+                    <a href="/{% if mine %}{{ request.user.username }}{% else %}{{ context_user.username }}{% endif %}">
+                        {% if mine %}
+                            My
+                        {% else %}
+                            {%if not public %}
+                                {{ context_user.username }}'s
+                            {% else %}
+                                Public
+                            {% endif %}
+                        {% endif %}
+                        snipts</a> &raquo; {{ tag }} <a href="{{ request.path }}/feed" title="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}."><img src="/media/images/rss.png" style="margin-left: 4px; vertical-align: -2px;" alt="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}." title="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}." /></a>
+                {% else %}
+                    {% if mine %}
+                        My
+                    {% else %}
+                        {%if not public %}
+                            {{ context_user.username }}'s
+                        {% else %}
+                            Public
+                        {% endif %}
+                    {% endif %}
+                    snipts <a href="{{ request.path }}/feed" title="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}."><img src="/media/images/rss.png" style="margin-left: 4px; vertical-align: -2px;" alt="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}." title="The latest {% if public %}public {% endif %}{% if tag %}{{ tag }} {% endif %}snipts{% if context_user and not public %} from {{ context_user }}{% endif %}." /></a>
+                {% endif %}
+            </h1>
+            {% autopaginate snipts 20 %}
+            <div class="snipt-count left">
+                showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ snipts_count }} snipts{% if tag %} for <a href="/{% if mine %}{{ request.user.username }}{% else %}{{ context_user.username }}{% endif %}/tag/{{ tag|urlencode }}">{{ tag }}</a>{% endif %}
+            </div>
+            <form id="toggle-wrap-form" method="post" action="."><div id="toggle-wrap"><input type="checkbox" id="wrap-check"{% if not disable_wrap %} checked="checked"{% endif %} /><label for="wrap-check"> <span id="wrap-text">wrap code</span><span id="loading-wrap" style="display: none; color: green;">loading...</span></label></div></form>
+            <ul class="snipts">
+                {% for snipt in snipts %}
+                <li class="container-{{ snipt.id }} clearfix">
+                    <span class="description clearfix" id="description-{{ snipt.id }}"><a title="Permalink for this snipt" href="{{ snipt.get_absolute_url }}{% if not snipt.public %}?key={{ snipt.key }}{% endif %}"><span class="permaslug">&#8734;</span> {{ snipt.description }}</a></span>
+                    <pre class="code" id="code-{{ snipt.id }}" style="display: none;">{{ snipt.code }}</pre>
+                    <pre class="lexer" id="lexer-raw-{{ snipt.id }}" style="display: none;">{{ snipt.lexer }}</pre>
+                    <p id="public-raw-{{ snipt.id }}" style="display: none;">{{ snipt.public }}</p>
+                    <p id="description-raw-{{ snipt.id }}" style="display: none;">{{ snipt.description }}</p>
+                    <div id="code-stylized-{{ snipt.id }}" class="code-stylized">
+                        {% if request.user.is_authenticated %}
+                            {% ifnotequal snipt.user request.user %}<a href="#" onclick="ToggleFav(this, {{ snipt.id }}); return false;" class="favicon {% snipt_is_favorite snipt request.user %}" title="Favorite">&nbsp;</a>{% endifnotequal %}
+                        {% endif %}
+                        {% if mine %}{% if not snipt.favrd %}<span id="public-flag-{{ snipt.id }}" class="public"{% if not snipt.public %} style="display: none;"{% endif %}>public</span>{% endif %}{% endif %}{{ snipt|code_stylized|safe }}</div>
+                    <p class="tools clearfix">
+                        <span class="tools-container">
+                            <a class="right copy" href="#" id="copy-{{ snipt.id }}">copy</a>
+                            {% ifequal snipt.user request.user %}
+                                <span class="right separator">|</span>
+                                <a class="edit right" href="#">edit</a>
+                            {% endifequal %}
+                            <span class="right separator embed-{{ snipt.id }}">|</span>
+                            <a href="#" onclick="$('#embed-code-{{ snipt.id }}').toggle(); return false;" class="embed right embed-{{ snipt.id }}">embed</a>
+                        </span>
+                    </p>
+                    <p><input class="tags" name="tags" id="tags-{{ snipt.id }}" style="display: none;" value="{{ snipt.tags }}" type="text" /></p>
+                    {% get_comment_count for snipt as comment_count %}
+                    <span class="snipt-tags tags-title"><a href="{{ snipt.get_absolute_url }}">{{ comment_count }} comment{% ifnotequal comment_count 1 %}s{% endifnotequal %}</a> - tagged in&nbsp;</span>
+                    <ul class="snipt-tags clearfix" id="tags-list-{{ snipt.id }}">
+                        {% for tag in snipt.get_tags %}
+                            <li><a href="/{% if mine %}{{ request.user.username }}{% else %}{{ context_user.username }}{% endif %}/tag/{{ tag|urlencode }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}</li>
+                        {% endfor %}
+                    </ul>
+                    <span class="posted-by tags-title">posted{% ifnotequal snipt.user request.user %} by <a href="/{{ snipt.user.username }}">{{ snipt.user.username }}</a>{% endifnotequal %} on {{ snipt.created|date:"M d, Y" }} at {{ snipt.created|date:"g:i a T" }}</span>
+                    <p id="embed-code-{{ snipt.id }}" style="display: none;"><input type="text" class="embed-code right" onclick="$(this).select(); return false;" name="embed-{{ snipt.id }}" value="&lt;script type=&quot;text/javascript&quot; src=&quot;http://snipt.net/embed/{{ snipt.key }}&quot;&gt;&lt;/script&gt;" /></p>
+                </li>
+                {% endfor %}
+            </ul>
+            {% if page_obj.has_next or page_obj.has_previous %}
+                <div class="pages">
+                    {% paginate %}
+                </div>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+                <div class="message bottom">
+                    <div class="info">
+                        <div class="content">
+                            <a href="/signup">Sign up</a> to create your own snipts, or <a href="/login">login</a>.
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div id="right">
+            <div id="mini-search">
+                <form method="get" action="/search">
+                    <div class="fields">
+                        <input type="text" id="q" name="q" class="mini-search" value="search" />
+                    </div>
+                </form>
+            </div>
+            {% if tag %}
+                {% ad tag %}
+            {% else %}
+                {% ad 'none' %}
+            {% endif %}
+            <h1 style="padding-top: 15px;">
+                {% if mine %}
+                    My
+                {% else %}
+                    {%if not public %}
+                        {{ context_user.username }}'s
+                    {% else %}
+                        Top 40 public
+                    {% endif %}
+                {% endif %}
+                tags
+            </h1>
+            <ul id="user-tags" class="clearfix">
+                {% for usertag in user_tags_list %}
+                    <li><a href="/{% if mine %}{{ request.user.username }}{% else %}{{ context_user.username }}{% endif %}/tag/{{ usertag|urlencode }}"{% ifequal request_tag usertag.slug %} class="active"{% endifequal %}>{{ usertag }} ({{ usertag.count }})</a></li>
+                {% endfor %}
+                {% if public %}
+                    <li class="more"><a href="/public/tags" style="color: #FFF; margin-top: 5px; background-image: none !important;">View all &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<head>
+    
+    {% load compressed %}
+    
+    <meta name="language" content="en" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Snipt is your collection of frequently used commands or code snippets. Because even Subversion gurus forget the 'svn switch' syntax sometimes." />
+    <meta name="microid" content="mailto+http:sha1:9f8fdb90033c1dda4ad5f1e8801572578d54222f" />
+    
+    <title>{% block title %}Snipt{% endblock %}</title>
+    
+    <link rel="icon" href="{{ MEDIA_URL }}images/favicon.ico" />
+    
+	{% block css %}{% compressed_css 'all' %}{% endblock %}
+	
+	{% block header %}{% endblock %}
+	
+	{% compressed_js  'all' %}
+	
+	<!--[if IE 6]><style type="text/css">#ie6 {display: block !important;} #not-ie6 {display: none !important;}</style><![endif]-->
+	
+	{% if disable_wrap %}<style type="text/css">.highlight pre {white-space: pre;}</style>{% endif %}
+	
+	{% block js %}{% endblock %}
+	
+	<script type="text/javascript">var username = '{{ request.user.username }}';</script>
+	
+</head>
+
+<body{% block body_styles %}{% endblock %}>
+
+<div id="not-ie6">
+    <div id="header">
+        <div class="frame clearfix">
+            <div id="logo-container">{% block logo %}<a href="/{{ request.user.username }}"><img id="logo" src="/media/images/logo.png" alt="Snipt" title="Snipt" /></a>{% endblock %}</div>
+            <div id="header-ads">
+                {% comment %}
+                    <div style="float: left; display: block;">
+                        <a style="display: block; width: 100px; margin: 0 0 0 11px !important;" href="http://riffer.org" title="Riffer - The guitarist's definitive Q &amp; A site"><img src="/media/images/riffer.png" title="Riffer - The guitarist's definitive Q &amp; A site" alt="Riffer - The guitarist's definitive Q &amp; A site" /></a>
+                    </div>
+                {% endcomment %}
+                <script type="text/javascript">
+                    //<![CDATA[
+                    Vertical1236429 = false;
+                    ShowAdHereBanner1236429 = true;
+                    RepeatAll1236429 = false;
+                    NoFollowAll1236429 = true;
+                    BannerStyles1236429 = new Array(
+                    	"a{display:block;font-size:11px;color:#5C5C5C;font-family:verdana,sans-serif;margin:0 4px 10px 0;text-align:center;text-decoration:none;overflow:hidden;}",
+                    	"img{border:0;clear:right;}",
+                    	"a.adhere{color:#5C5C5C;font-weight:bold;font-size:12px;border:1px solid #292929;background:transparent;text-align:center;}",
+                    	"a.adhere:hover{background:transparent;color:#FFF;}"
+                    );
+                    document.write(unescape("%3Cscript src='"+document.location.protocol+"//s3.buysellads.com/1236429/1236429.js?v="+Date.parse(new Date())+"' type='text/javascript'%3E%3C/script%3E"));
+                    //]]>
+                </script>
+            </div>
+            <div id="twitter">
+                <a href="http://twitter.com/lionburger"><img id="blink" src="{{ MEDIA_URL }}images/mr-tweet-blind.png" alt="" title="" /></a>
+                <a href="http://twitter.com/lionburger"><img id="mr-tweet" src="{{ MEDIA_URL }}images/mr-tweet.png" alt="Kick ass twitter bird by http://thedesignsuperhero.com" title="Kick ass twitter bird by http://thedesignsuperhero.com" /></a>
+                {% if not is_home %}<span class="follow"><a href="http://twitter.com/lionburger">Follow us on Twitter</a><br />for Snipt updates.</span>{% endif %}
+            </div>
+        </div>
+    </div>
+    <div id="content" class="clearfix">
+        <div class="bl"></div>
+        <div class="br"></div>
+        {% block content %}{% endblock %}
+    </div>
+    <div id="footer" class="frame">
+        <a href="http://buysellads.com/buy/detail/1730" class="right" style="padding-right: 20px;">Advertise</a>
+        <a href="http://nicksergeant.com">Nick Sergeant</a> and <a href="http://pkarl.com">Pete Karl</a> (<a href="http://lionburger.com/">Lion Burger, LLC.</a>) built this web app on rock and roll, with a little help from <a href="http://www.djangoproject.com/">Django</a> and <a href="http://jquery.com/">jQuery</a>.
+    </div>
+</div>
+
+<div id="ie6" style="display: none;">
+    <p>Hey there!  I see you're running Internet Explorer 6.</p>
+    <p>That's neat.  This reminds me of my grandpa.  He had this old car that he kept having to fix.  He spent so much money on it that he didn't want to get rid of it (even when it stopped running).</p>
+    <p>You guys should hang out.</p>
+    <p><a href="http://firefox.com">Here's a free sports car from Snipt.</a></p>
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-514462-44']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+    })();
+    //]]>
+</script>
+
+<script type="text/javascript">
+    //<![CDATA[
+    var uservoiceOptions = {
+        /* required */
+        key: 'snipt',
+        host: 'feedback.snipt.net', 
+        forum: '8117',
+        showTab: true,  
+        /* optional */
+        alignment: 'left',
+        background_color:'#f00', 
+        text_color: 'white',
+        hover_color: '#06C',
+        lang: 'en'
+    };
+
+    function _loadUserVoice() {
+        var s = document.createElement('script');
+        s.setAttribute('type', 'text/javascript');
+        s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
+        document.getElementsByTagName('head')[0].appendChild(s);
+    }
+    _loadSuper = window.onload;
+    window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
+    //]]>
+</script>
+
+<!-- memcached test at {% now "r" %} -->
+</body>
+</html>

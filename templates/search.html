@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% load tagging_tags %}
+{% load pagination_tags %}
+{% load code_stylized %}
+{% load comments %}
+
+{% block title %}{{ block.super }} - Search{% if query_string %} - {{ query_string }}{% endif %} | Share and store code or command snippets.{% endblock %}
+
+{% block body_styles %} id="userpage"{% endblock %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+    {% include 'userpage-header.html' %}
+{% endif %}
+
+<div id="userpage-content" class="clearfix with-snipts">
+    
+    {% if not request.user.is_authenticated %}
+        <div class="message">
+            <div class="info">
+                <div class="content">
+                    <a href="/signup">Sign up</a> to create your own snipts, or <a href="/login">login</a>.
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    <div id="has-snipts">
+        <div id="left" class="search">
+            <div id="search-box"{% if snipts or query_string %} style="margin-bottom: 35px;"{% endif %}>
+                <form method="get" action="/search">
+                    <div class="fields">
+                        <label for="q">Search snipts for: </label>
+                        <input type="text" id="q" name="q" value="{{ query_string }}" />
+                        <input type="submit" id="search-submit" value="Search" />
+                    </div>
+                </form>
+            </div>
+            {% if snipts %}
+                {% autopaginate snipts 20 %}
+                <div class="snipt-count left">
+                    showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ snipts_count }} snipts for '{{ query_string }}'
+                </div>
+                <form id="toggle-wrap-form" method="post" action="."><div id="toggle-wrap"><input type="checkbox" id="wrap-check"{% if not disable_wrap %} checked="checked"{% endif %} /><label for="wrap-check"> <span id="wrap-text">wrap code</span><span id="loading-wrap" style="display: none; color: green;">loading...</span></label></div></form>
+                <ul class="snipts">
+                    {% for snipt in snipts %}
+                    <li class="container-{{ snipt.id }} clearfix search-snipt">
+                        {{ wrap }}
+                        <span class="description clearfix" id="description-{{ snipt.id }}"><a title="Permalink for this snipt" href="/{{ snipt.user }}/{{ snipt.slug }}{% if not snipt.public %}?key={{ snipt.key }}{% endif %}"><span class="permaslug">&#8734;</span> {{ snipt.description }}</a></span>
+                        <pre class="code" id="code-{{ snipt.id }}" style="display: none;">{{ snipt.code }}</pre>
+                        <pre class="lexer" id="lexer-raw-{{ snipt.id }}" style="display: none;">{{ snipt.lexer }}</pre>
+                        <p id="public-raw-{{ snipt.id }}" style="display: none;">{{ snipt.public }}</p>
+                        <p id="description-raw-{{ snipt.id }}" style="display: none;">{{ snipt.description }}</p>
+                        <div id="code-stylized-{{ snipt.id }}">{{ snipt|code_stylized|safe }}</div>
+                        <p class="tools clearfix">
+                            <span class="tools-container">
+                                <a class="right copy" href="#" id="copy-{{ snipt.id }}">copy</a>
+                            </span>
+                        </p>
+                        <p><input class="tags" name="tags" id="tags-{{ snipt.id }}" style="display: none;" value="{{ snipt.tags }}" type="text" /></p>
+                        {% get_comment_count for snipt as comment_count %}
+                        <span class="snipt-tags tags-title"><a href="{{ snipt.get_absolute_url }}">{{ comment_count }} comment{% ifnotequal comment_count 1 %}s{% endifnotequal %}</a> - tagged in&nbsp;</span>
+                        <ul class="snipt-tags clearfix" id="tags-list-{{ snipt.id }}">
+                            {% for tag in snipt.get_tags %}
+                                <li><a href="/{{ snipt.user }}/tag/{{ tag|urlencode }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}</li>
+                            {% endfor %}
+                        </ul>
+                        <span class="posted-by tags-title" style="clear: left;">posted by <a href="/{{ snipt.user.username }}">{{ snipt.user.username }}</a> on {{ snipt.created|date:"M d, Y" }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% if page_obj.has_next or page_obj.has_previous %}
+                    <div class="pages">
+                        {% paginate %}
+                    </div>
+                {% endif %}
+            {% else %}
+                {% if query_string %}
+                    <div id="no-results">Sorry, no snipts for '{{ query_string }}'.  Please try again.</div>
+                {% endif %}
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+                <div class="message bottom">
+                    <div class="info">
+                        <div class="content">
+                            <a href="/signup">Sign up</a> to create your own snipts, or <a href="/login">login</a>.
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

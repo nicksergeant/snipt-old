@@ -1,0 +1,8 @@
+*.pid
+*.pyc
+*.swp
+fabfile.py
+local_settings.py
+logs
+media/admin
+pip-log.txt

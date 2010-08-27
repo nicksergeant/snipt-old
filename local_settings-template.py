@@ -1,0 +1,14 @@
+from settings import INSTALLED_APPS
+
+DEBUG = False
+
+DATABASE_ENGINE = ''
+DATABASE_NAME = ''
+DATABASE_USER = ''
+DATABASE_PASSWORD = ''
+
+TIME_ZONE = ''
+
+SECRET_KEY = ''
+
+INSTALLED_APPS += ('gunicorn',)

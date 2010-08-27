@@ -1,0 +1,13 @@
+<form name="fopenid" action="{% url user_signin %}" method="post" class="fopenid login-form clearfix" style="padding-bottom: 15px;">
+    {{ form2.next }}
+    {% if msg %}<div class="error">{{ msg }}</div>{% endif %}
+    {% if form2.errors %}
+        <div class="error">Invalid OpenID.</div>
+    {% endif %}
+    <div class="fields">
+        <label for="id_openid_ul">OpenId: </label><input type="text" maxlength="255" name="openid_url" class="required openid" id="id_openid_url" />
+    </div>
+    <div class="submit">
+        <input name="bsignin" type="submit" class="submit" value="{% ifequal request.path '/signup' %}Signup{% else %}Login{% endifequal %}" />
+    </div>
+</form>

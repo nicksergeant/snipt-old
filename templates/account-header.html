@@ -1,0 +1,16 @@
+<div id="userpage-header" class="clearfix">
+    <ul class="left">
+        <li><a href="/{{ request.user.username }}">My snipts</a></li>
+        <li><a href="/public">Public snipts</a></li>
+        <li><a href="/{{ request.user.username }}#add" class="add-snipt-header">Add snipt</a></li>
+        <li><a href="/search">Search</a></li>
+        <li><a href="/api">API</a></li>
+    </ul>
+    <ul class="right">
+        {% if request.user.is_superuser %}
+            <li><a href="/admin">Administration</a></li>
+        {% endif %}
+        <li><a class="active" href="/account">My account (<span>{{ request.user.username }}</span>)</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</div>

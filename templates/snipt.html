@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% load tagging_tags %}
+{% load code_stylized %}
+{% load comments %}
+
+{% block title %}{{ block.super }} - {{ context_user.username }} - {{ snipt.description }} | Share and store code or command snippets.{% endblock %}
+
+{% block body_styles %} id="userpage"{% endblock %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+    {% include 'userpage-header.html' %}
+{% endif %}
+
+<div id="userpage-content" class="clearfix full-page-snipt">    
+    {% if not request.user.is_authenticated %}
+        <div class="message">
+            <div class="info">
+                <div class="content">
+                    <a href="/signup">Sign up</a> to create your own snipts, or <a href="/login">login</a>.
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <h1>{% if not mine and not key and not request.user.is_authenticated %}<a href="/public">Public snipts</a> &raquo; {% endif %}<a href="/{{ context_user.username }}">{% if mine %}My{% else %}{{ context_user.username }}'s{% endif %} snipts</a> &raquo; {{ snipt.description }}</h1>
+    <div class="snipt-count left">
+        <span class="posted-by tags-title">posted on {{ snipt.created|date:"M d, Y" }} at {{ snipt.created|date:"g:i a T" }} in&nbsp;</span>
+        <ul class="left snipt-tags clearfix" id="tags-list-{{ snipt.id }}" style="padding-top: 0 !important;">
+            {% for tag in snipt.get_tags %}
+                <li><a href="/{% if mine %}{{ request.user.username }}{% else %}{{ context_user.username }}{% endif %}/tag/{{ tag|urlencode }}">{{ tag }}</a>{% if not forloop.last %},&nbsp;{% endif %}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <form id="toggle-wrap-form" method="post" action="."><div id="toggle-wrap"><input type="checkbox" id="wrap-check"{% if not disable_wrap %} checked="checked"{% endif %} /><label for="wrap-check"> <span id="wrap-text">wrap code</span><span id="loading-wrap" style="display: none; color: green;">loading...</span></label></div></form>
+    <div id="full-page-snipt">
+        <ul class="snipts" style="padding-top: 0;">
+            <li class="container-{{ snipt.id }} clearfix">
+                {{ wrap }}
+                <pre class="code" id="code-{{ snipt.id }}" style="display: none;">{{ snipt.code }}</pre>
+                <pre class="lexer" id="lexer-raw-{{ snipt.id }}" style="display: none;">{{ snipt.lexer }}</pre>
+                <p id="public-raw-{{ snipt.id }}" style="display: none;">{{ snipt.public }}</p>
+                <div id="code-stylized-{{ snipt.id }}" class="code-stylized">{% if mine %}<span id="public-flag-{{ snipt.id }}" class="public"{% if not snipt.public %} style="display: none;"{% endif %}>public</span>{% endif %}{{ snipt|code_stylized|safe }}</div>
+                <p class="tools clearfix">
+                    <span class="tools-container">
+                        <a class="right copy" href="#" id="copy-{{ snipt.id }}">copy</a>
+                        <span class="right separator embed-{{ snipt.id }}">|</span>
+                        <a href="#" onclick="$('#embed-code-{{ snipt.id }}').toggle(); return false;" class="embed right embed-{{ snipt.id }}">embed</a>
+                    </span>
+                </p>
+                <p id="embed-code-{{ snipt.id }}" style="display: none; clear: right;"><input type="text" class="embed-code right" onclick="$(this).select(); return false;" name="embed-{{ snipt.id }}" value="&lt;script type=&quot;text/javascript&quot; src=&quot;http://snipt.net/embed/{{ snipt.key }}&quot;&gt;&lt;/script&gt;" /></p>
+            </li>
+        </ul>
+    </div>
+    
+    <div id="comments">
+        {% get_comment_list for snipt as comment_list %}
+        <h2>{% get_comment_count for snipt as comment_count %}{{ comment_count }} Comment{% ifnotequal comment_count 1 %}s{% endifnotequal %}</h2>
+        {% for comment in comment_list %}
+            <div class="comment clearfix" id="comment-{{ comment.id }}">
+                {% if forloop.last %}<a name="new-comment"></a>{% endif %}
+                <div class="meta">
+                    <div class="person">
+                        {% if comment.url %}<a href="{{ comment.url }}">{{ comment.name }}</a>{% else %}{{ comment.name }}{% endif %}
+                    </div>
+                    <div class="timestamp">
+                        on {{ comment.submit_date|date:"M d, Y" }} at {{ comment.submit_date|date:"g:i a T" }}
+                    </div>
+                </div>
+                <div class="body">
+                    {{ comment.comment|urlize|linebreaksbr }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    {% get_comment_form for snipt as form %}
+    {% if request.user.is_authenticated %}
+        <div class="comment clearfix">
+            <div class="meta">
+                <div class="person"><label for="id_comment">Leave a comment:</label></div>
+                <div class="timestamp">(as <a href="http://snipt.net/{{ request.user.username }}">{{ request.user.username }}</a>)</div>
+            </div>
+            <div class="new-comment">
+                <form action="{% comment_form_target %}" method="POST">
+                    {{ form.comment }}
+                    <div style="display: none;">
+                        {{ form.honeypot }}
+                        {{ form.content_type }}
+                        {{ form.object_pk }}
+                        {{ form.timestamp }}
+                        {{ form.security_hash }}
+                        <input type="hidden" name="url" value="http://snipt.net/{{ request.user.username }}" />
+                        <input type="hidden" name="next" value="{{ snipt.get_absolute_url }}" />
+                    </div>
+                    <input type="submit" value="Add comment" id="id_submit" />
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="message bottom">
+            <div class="info">
+                <div class="content">
+                    <a href="/signup?next={{ snipt.get_absolute_url }}">Sign up</a>, or <a href="/login?next={{ snipt.get_absolute_url }}">login</a> to leave a comment.
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+</div>
+
+{% endblock content %}

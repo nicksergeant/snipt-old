@@ -1,0 +1,11 @@
+-e git://github.com/django/django.git@1.1.X#egg=django
+-e git+http://github.com/benoitc/gunicorn.git#egg=gunicorn
+-e svn+http://django-pagination.googlecode.com/svn/trunk/#egg=django-pagination
+-e git+http://github.com/django-extensions/django-extensions.git#egg=django-extensions
+-e hg+http://bitbucket.org/jespern/django-piston#egg=django-piston
+-e svn+http://django-compress.googlecode.com/svn/trunk/#egg=django-compress
+-e svn+http://django-tagging.googlecode.com/svn/trunk/#egg=django-tagging
+
+MySQL-python==1.2.3c1
+Pygments
+python-openid

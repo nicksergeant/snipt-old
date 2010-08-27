@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="auth-forms">
+        <div class="login">
+            <h3>Login</h3>
+            {% include "registration/openid.html" %}
+            <div class="openid-or">
+                <div class="openid-or-sep"> </div>
+                <span>or</span>
+            </div>
+            {% include "registration/login_form.html" %}
+            <ul class="auth-links">
+                <li><a href="/signup">Create new account</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
