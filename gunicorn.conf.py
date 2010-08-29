@@ -1,6 +1,6 @@
 import os
 
-bind = "localhost:1337"
+bind = "localhost:1338"
 daemon = True                     # Whether work in the background
 debug = False                     # Some extra logging
 logfile = "./logs/gunicorn.log"                     # Name of the log file
