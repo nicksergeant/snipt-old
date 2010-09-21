@@ -4,6 +4,20 @@
 
 {% block body_styles %} id="homepage"{% endblock %}
 
+{% block header %}
+    <script type="text/javascript">
+        (function() {
+            var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+            
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = 'http://api.flattr.com/js/0.5.0/load.js?mode=auto';
+            
+            t.parentNode.insertBefore(s, t);
+        })();
+    </script>
+{% endblock %}
+
 {% block content %}
 <div id="homepage-content">
     <div id="homepage-top" class="clearfix">
@@ -40,6 +54,9 @@
                 <div class="login left">
                     <h3>Login</h3>
                     {% include "registration/login_form.html" %}
+                    <div style="text-align: center; margin-top: 80px;">
+                        <a class="FlattrButton" style="display:none;" href="http://snipt.net"></a>
+                    </div>
                 </div>
             </div>
         </div>
