@@ -23,6 +23,7 @@ blockquote, q {quotes: "" "";}
 .left {float: left;}
 .right {float: right;}
 .center {text-align: center;}
+.notification { margin-bottom: .5em; color: orange;}
 
 /* Elements */
 

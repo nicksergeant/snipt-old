@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.models import User
 from django.contrib.comments.signals import comment_was_posted
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -11,9 +12,9 @@ from django.utils import simplejson
 from tagging.utils import get_tag
 from snipt.snippet.utils import *
 from django.http import Http404
+from settings import DEBUG
 from snipt.forms import *
 import md5
-import settings
 
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
@@ -67,6 +68,42 @@ def embed(request, snipt):
             referrer.save()
         
     return render_to_response('embed.html', locals(), context_instance=RequestContext(request), mimetype="application/javascript")
+
+def password_reset(request):
+  request.session['msg'] = "";
+  if request.POST:
+    try:
+      # check to see if a user by the email address exists in the system
+      email = request.POST['email']
+      user = User.objects.get(email=email)
+    
+      # generate a new password
+      from random import choice
+      new_password = ''.join([choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(16)])
+
+      # assign the new password to the user account
+      user.set_password(new_password)
+      user.save()
+
+      # send the new password to that e-mail address & tell them to change their pass immediately!
+      from django.core.mail import send_mail
+      
+      subject = '[Snipt] Here\'s a temporary password'
+      message = 'Log-in using %s\r\n\r\nPlease update your password immediately after that!\r\n\r\n- Snipt.net admins' % new_password
+      
+      send_mail(subject, message, 'no-reply@snipt.net', [email], fail_silently=False)
+      
+      request.session['msg'] = "We've sent you a temporary password. Check your e-mail!"
+      
+    except User.DoesNotExist:
+      request.session['msg'] = "We didn't find anyone registered under %s" % request.POST['email']
+    
+    # or asset false
+    # assert False
+    
+  return render_to_response('password_reset.html', locals(), context_instance=RequestContext(request))
+  # request.session.msg = 'your password is being worked on by the locals.'
+  # home_page(request)
 
 def home_page(request):
     if request.user.is_authenticated():
@@ -230,7 +267,7 @@ def user_page(request, user, slug, feed=False):
         user_tags_list = Tag.objects.usage_for_queryset(Snippet.objects.filter(user=context_user.id, public='1').order_by('-created'), counts=True)
     else:
         user_tags_list = Tag.objects.usage_for_queryset(Snippet.objects.filter(public='1'), counts=True)
-        if not settings.DEBUG:
+        if not DEBUG:
             user_tags_list.sort(key=lambda x: x.count, reverse=True)
         user_tags_list = user_tags_list[:40]
     
