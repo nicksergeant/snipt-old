@@ -1,4 +1,5 @@
 *.pid
+*.un~
 *.pyc
 *.swp
 fabfile.py

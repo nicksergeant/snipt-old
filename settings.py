@@ -104,6 +104,7 @@ INSTALLED_APPS = (
     'snipt.api',
     'tagging',
     'favsnipt',
+    'south',
 )
 
 # cache requires these middleware items (in this order)
