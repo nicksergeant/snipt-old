@@ -42,7 +42,7 @@ strong {font-weight: bold;}
     float: right;
 }
 .carbonad {
-    background: transparent url('/media/images/header-bg.png') top left repeat-x !important;
+    background-color: #272727 !important;
     border: 0 !important;
     height: 108px !important;
 }
