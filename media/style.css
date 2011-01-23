@@ -42,17 +42,18 @@ strong {font-weight: bold;}
     float: right;
 }
 .carbonad {
-    background: transparent url('/media/images/header-bg.png') top left repeat-x;
-    height: 108px;
+    background: transparent url('/media/images/header-bg.png') top left repeat-x !important;
+    border: 0 !important;
+    height: 108px !important;
 }
 .carbonad-image img {
-    margin: 4px 0 0 4px;
+    margin: 4px 0 0 4px !important;
 }
 .carbonad br {
-    display: none;
+    display: none !important;
 }
 .carbonad-text {
-    margin-top: 8px;
+    margin-top: 8px !important;
 }
 #logo {margin-left: -38px;}
 #header-ads {float: right; padding-top: 11px;}
