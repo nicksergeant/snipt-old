@@ -59,11 +59,11 @@ strong {font-weight: bold;}
 #header-ads {float: right; padding-top: 11px;}
 #header-ads a {float: left; margin: 0 !important; margin-left: 11px !important;}
 #twitter {text-align: right; float: right; position: relative; }
-#twitter img {position: absolute; top: 23px; right: 12px;}
-#twitter .follow {color: #E8E8E8; position: absolute; top: 34px; right: 102px; font-size: 14px; line-height: 19px; width: 140px;}
+#twitter img {position: absolute; top: 23px; right: 60px;}
+#twitter .follow {color: #E8E8E8; position: absolute; top: 34px; right: 150px; font-size: 14px; line-height: 19px; width: 140px;}
 #twitter .follow a {color: #0084FF; text-decoration: none;}
 #twitter .follow a:hover {text-decoration: underline;}
-#blink {z-index: 2 !important; position: absolute !important; top: 44px !important; right: 38px !important; display: none;}
+#blink {z-index: 2 !important; position: absolute !important; top: 44px !important; right: 86px !important; display: none;}
 #bsaz_1236429.adblock a.adhere {height: 59px !important; line-height: 17px !important; padding-top: 24px !important;}
 
 /* Frame */
