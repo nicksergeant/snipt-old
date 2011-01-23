@@ -188,18 +188,6 @@
 </div>
 <div id="userpage-content" class="clearfix {% if snipts %}with-snipts{% endif %}">
 
-    {% if not disable_message %}
-        <div class="message">
-            <div class="info">
-                <div class="content clearfix">
-                    <span style="color: #9EF21B;">IMPORTANT!</span><br /><br />
-                    Snipt.net is now OPEN SOURCE!<br /><br /><a href="http://github.com/lionburger/snipt">Grab the code on GitHub here</a>, and feel free to submit patches<br />and features by sending a pull request.
-                    <a href="#" onclick="DisableMessage(); return false;" class="right">Sweet, close this message</a>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-    
     {% if not request.user.is_authenticated %}
         <div class="message">
             <div class="info">
