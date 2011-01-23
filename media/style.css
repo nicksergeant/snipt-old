@@ -38,6 +38,22 @@ strong {font-weight: bold;}
 #header {background: url('/media/images/header-bg.png') top left repeat-x; border-bottom: 1px solid #C1C1C1;}
 #header .frame {position: relative;}
 #logo-container {float: left;}
+#carbonads-container {
+    float: right;
+}
+.carbonad {
+    background: transparent url('/media/images/header-bg.png') top left repeat-x;
+    height: 108px;
+}
+.carbonad-image img {
+    margin: 4px 0 0 4px;
+}
+.carbonad br {
+    display: none;
+}
+.carbonad-text {
+    margin-top: 8px;
+}
 #logo {margin-left: -38px;}
 #header-ads {float: right; padding-top: 11px;}
 #header-ads a {float: left; margin: 0 !important; margin-left: 11px !important;}
