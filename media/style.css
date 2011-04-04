@@ -46,14 +46,14 @@ strong {font-weight: bold;}
     border: 0 !important;
     height: 108px !important;
 }
-.carbonad-image img {
+.carbonad-image {
     margin: 4px 0 0 4px !important;
 }
 .carbonad br {
     display: none !important;
 }
 .carbonad-text {
-    margin-top: 8px !important;
+    padding-top: 10px !important;
 }
 #logo {margin-left: -38px;}
 #header-ads {float: right; padding-top: 11px;}
