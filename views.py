@@ -55,7 +55,7 @@ def embed(request, snipt):
         snipt.referer = request.META.get('HTTP_REFERER', '')
         i = 0;
         for sniptln in snipt.code_stylized:
-            snipt.code_stylized[i] = snipt.code_stylized[i].replace(" font-weight: bold", " font-weight: normal").replace('\'','\\\'').replace('\\n','\\\\n').replace("\\x", "\\\\x").replace('\\&#39;', '\\\\&#39;')
+            snipt.code_stylized[i] = snipt.code_stylized[i].replace(" font-weight: bold", " font-weight: normal").replace('\'','\\\'').replace('\\n','\\\\n').replace("\\x", "\\\\x").replace('\\&#39;', '\\\\&#39;').replace('\\s', '\\\\s')
             i = i + 1
     except Snippet.DoesNotExist:
         raise Http404
