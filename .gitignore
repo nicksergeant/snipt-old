@@ -2,6 +2,7 @@
 *.un~
 *.pyc
 *.swp
+.gunicorn.log
 fabfile.py
 local_settings.py
 logs
