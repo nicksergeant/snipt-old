@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.utils.html import escape
 
 from piston.handler import AnonymousBaseHandler, BaseHandler
 from piston.utils import rc
@@ -49,7 +48,6 @@ class TagHandler(BaseHandler):
         }
         return data
 
-
 class TagsHandler(BaseHandler):
     
     def read(self, request):
@@ -65,7 +63,6 @@ class TagsHandler(BaseHandler):
             'tags': tags_list
         }
         return data
-
 
 class UserHandler(BaseHandler):
     
@@ -96,7 +93,6 @@ class UserHandler(BaseHandler):
             'count': snipts.count()
         }
         return data
-
 
 class SniptHandler(BaseHandler):
     
