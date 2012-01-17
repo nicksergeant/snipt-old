@@ -55,58 +55,21 @@
     </div>
     
     <div id="comments">
-        {% get_comment_list for snipt as comment_list %}
-        <h2>{% get_comment_count for snipt as comment_count %}{{ comment_count }} Comment{% ifnotequal comment_count 1 %}s{% endifnotequal %}</h2>
-        {% for comment in comment_list %}
-            <div class="comment clearfix" id="comment-{{ comment.id }}">
-                {% if forloop.last %}<a name="new-comment"></a>{% endif %}
-                <div class="meta">
-                    <div class="person">
-                        {% if comment.url %}<a href="{{ comment.url }}">{{ comment.name }}</a>{% else %}{{ comment.name }}{% endif %}
-                    </div>
-                    <div class="timestamp">
-                        on {{ comment.submit_date|date:"M d, Y" }} at {{ comment.submit_date|date:"g:i a T" }}
-                    </div>
-                </div>
-                <div class="body">
-                    {{ comment.comment|urlize|linebreaksbr }}
-                </div>
-            </div>
-        {% endfor %}
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'snipt-net';
+            var disqus_url = ('https:' == document.location.protocol ? 'https' : 'http') + '://snipt.net{{ snipt.get_absolute_url }}';
+            var disqus_title = '{{ snipt.description }}';
+            var disqus_identifier = {{ snipt.id }};
+
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
     </div>
     
-    {% get_comment_form for snipt as form %}
-    {% if request.user.is_authenticated %}
-        <div class="comment clearfix">
-            <div class="meta">
-                <div class="person"><label for="id_comment">Leave a comment:</label></div>
-                <div class="timestamp">(as <a href="http://snipt.net/{{ request.user.username }}">{{ request.user.username }}</a>)</div>
-            </div>
-            <div class="new-comment">
-                <form action="{% comment_form_target %}" method="POST">
-                    {{ form.comment }}
-                    <div style="display: none;">
-                        {{ form.honeypot }}
-                        {{ form.content_type }}
-                        {{ form.object_pk }}
-                        {{ form.timestamp }}
-                        {{ form.security_hash }}
-                        <input type="hidden" name="url" value="http://snipt.net/{{ request.user.username }}" />
-                        <input type="hidden" name="next" value="{{ snipt.get_absolute_url }}" />
-                    </div>
-                    <input type="submit" value="Add comment" id="id_submit" />
-                </form>
-            </div>
-        </div>
-    {% else %}
-        <div class="message bottom">
-            <div class="info">
-                <div class="content">
-                    <a href="/signup?next={{ snipt.get_absolute_url }}">Sign up</a>, or <a href="/login?next={{ snipt.get_absolute_url }}">login</a> to leave a comment.
-                </div>
-            </div>
-        </div>
-    {% endif %}
 </div>
 
 {% endblock content %}

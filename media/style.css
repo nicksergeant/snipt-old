@@ -242,6 +242,9 @@ ul.snipts li.active {background-color: #171717; padding: 10px;}
 .comment .body, .comment .new-comment textarea {width: 700px; line-height: 18px !important; -moz-border-radius: 5px; border-radius: 5px; -webkit-border-radius: 5px; font: 14px "Helvetica Neue", Arial, Sans-Serif; padding: 15px; background-color: #1C1C1C;}
 .comment .new-comment textarea {border: 2px solid #5C5C5C; width: 700px; max-width: 730px; height: 18px; min-height: 18px; color: #E8E8E8; padding: 13px;}
 .comment .new-comment #id_submit {float: right; margin-top: 10px;}
+.dsq-comment-text { font: normal 14px/21px "Helvetica Neue",Helvetica,Arial,sans-serif; display: block !important; }
+.dsq-comment-actions, .dsq-comment-meta { font: bold 14px/21px "Helvetica Neue",Helvetica,Arial,sans-serif; }
+#disqus_thread h3, #dsq-footer, #dsq-sort-by { display: none; }
 
 /* User tags list */
 
