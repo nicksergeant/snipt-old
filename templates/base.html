@@ -64,33 +64,6 @@
 </div>
 
 <script type="text/javascript">
-    //<![CDATA[
-    var uservoiceOptions = {
-        /* required */
-        key: 'snipt',
-        host: 'feedback.snipt.net', 
-        forum: '8117',
-        showTab: true,  
-        /* optional */
-        alignment: 'left',
-        background_color:'#f00', 
-        text_color: 'white',
-        hover_color: '#06C',
-        lang: 'en'
-    };
-
-    function _loadUserVoice() {
-        var s = document.createElement('script');
-        s.setAttribute('type', 'text/javascript');
-        s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
-        document.getElementsByTagName('head')[0].appendChild(s);
-    }
-    _loadSuper = window.onload;
-    window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
-    //]]>
-</script>
-
-<script type="text/javascript">
     var _gauges = _gauges || [];
     (function() {
         var t   = document.createElement('script');
@@ -104,7 +77,35 @@
     })();
 </script>
 
-<script type="text/javascript">var a=new Date,b=a.getHours()+a.getTimezoneOffset()/60;if(18==a.getDate()&&0==a.getMonth()&&2012==a.getFullYear()&&13<=b&&24>=b)window.location="http://sopastrike.com/strike";</script>
+{% if request.user.is_authenticated %}
+<script id="IntercomSettingsScriptTag">
+  var intercomSettings = {
+    app_id: 'sajf131y',
+    email: '{{ request.user.email }}', // TODO: User's e-mail address
+    created_at: {{ request.user.date_joined|date:"U" }}, // TODO: User's sign-up date, Unix timestamp
+    widget: {
+        activator: '#IntercomDefaultWidget',
+        label: 'Support'
+    }
+  };
+</script>
+<script>
+  (function() {
+    function async_load() {
+      var s = document.createElement('script');
+      s.type = 'text/javascript'; s.async = true;
+      s.src = 'https://api.intercom.io/api/js/library.js';
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+    }
+    if (window.attachEvent) {
+      window.attachEvent('onload', async_load);
+    } else {
+      window.addEventListener('load', async_load, false);
+    }
+  })();
+</script>
+{% endif %}
 
 </body>
 </html>
